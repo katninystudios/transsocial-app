@@ -11,7 +11,8 @@ function createWindow() {
             preload: path.join(__dirname, "../api/preload.js"),
             contextIsolation: true,
             nodeIntegration: false,
-        }
+        },
+        titleBarStyle: "hidden"
     });
 
     mainWindow.loadURL("http://localhost:3000/home");
@@ -32,5 +33,30 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
         app.quit();
+    }
+});
+
+// when a window action is requested,
+// respond to it appropriately
+ipcMain.on("window-action", (event, action) => {
+    const win = BrowserWindow.getFocusedWindow();
+    if (!win) return;
+
+    switch (action) {
+        // minimize app
+        case "minimize":
+            win.minimize();
+            break;
+        case "maximize":
+            // maximize/unmaximize app
+            if (win.isMaximized()) {
+                win.unmaximize();
+            } else {
+                win.maximize();
+            }
+            break;
+        case "close":
+            win.close();
+            break;
     }
 });
