@@ -1,4 +1,5 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const path = require("path");
 
 // create the main window
 let mainWindow;
@@ -6,9 +7,14 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
+        webPreferences: {
+            preload: path.join(__dirname, "../api/preload.js"),
+            contextIsolation: true,
+            nodeIntegration: false,
+        }
     });
 
-    mainWindow.loadURL("https://transs.social/home");
+    mainWindow.loadURL("http://localhost:3000/home");
 }
 
 // when ready, create window
