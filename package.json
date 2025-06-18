@@ -1,12 +1,21 @@
 {
-  "name": "transsocial",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
+  "name": "transsocial-app",
+  "version": "1.0.0",
+  "description": "The source code for TransSocial's app, available for Windows, macOS, and Linux, and coming soon to Android and iOS.",
+  "main": "app/start.js",
   "scripts": {
-    "tauri": "tauri"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
   },
-  "devDependencies": {
-    "@tauri-apps/cli": "^2"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katninystudios/transsocial-app.git"
+  },
+  "keywords": [],
+  "author": "Katniny Studios",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/katninystudios/transsocial-app/issues"
+  },
+  "homepage": "https://github.com/katninystudios/transsocial-app#readme"
 }
