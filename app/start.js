@@ -1,8 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const path = require("path");
 
 // create the main window
 let mainWindow;
+let mainUrl = "http://localhost:3000";
+
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1280,
@@ -15,7 +17,21 @@ function createWindow() {
         titleBarStyle: "hidden"
     });
 
-    mainWindow.loadURL("http://localhost:3000/home");
+    // open external links in default browser
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: "deny" };
+    });
+
+    mainWindow.webContents.setWindowOpenHandler((details) => {
+        if (!details.url.startsWith(mainUrl) && details.disposition === "foreground-tab"  || !details.url.startsWith(mainUrl) && details.disposition === "new-window" || !details.url.startsWith(mainUrl) && details.disposition === "background-tab") {
+            shell.openExternal(details.url);
+            return { action: "deny" };
+        }
+    });
+
+    // start!
+    mainWindow.loadURL(`${mainUrl}/home`);
 }
 
 // when ready, create window
