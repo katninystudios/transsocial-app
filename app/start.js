@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const path = require("path");
+const { autoUpdater } = require("electron-updater");
 
 // create the main window
 let mainWindow;
-let mainUrl = "http://localhost:3000";
+let mainUrl = "https://transs.social/home";
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -75,4 +76,18 @@ ipcMain.on("window-action", (event, action) => {
             win.close();
             break;
     }
+});
+
+// check for updates
+autoUpdater.on("update-available", () => {
+    console.log("Update available!");
+});
+
+autoUpdater.on("update-downloaded", () => {
+    console.log("Update downloaded -- will install on quit.");
+    autoUpdater.quitAndInstall();
+});
+
+app.whenReady().then(() => {
+    autoUpdater.checkForUpdatesAndNotify();
 });

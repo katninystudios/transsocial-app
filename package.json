@@ -1,11 +1,13 @@
 {
   "name": "transsocial-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The source code for TransSocial's app, available for Windows, macOS, and Linux, and coming soon to Android and iOS.",
   "main": "app/start.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir"
   },
   "repository": {
     "type": "git",
@@ -17,5 +19,42 @@
   "bugs": {
     "url": "https://github.com/katninystudios/transsocial-app/issues"
   },
-  "homepage": "https://github.com/katninystudios/transsocial-app#readme"
+  "homepage": "https://github.com/katninystudios/transsocial-app#readme",
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "forceCodeSigning": false,
+    "appId": "com.katninystudios.transsocial",
+    "productName": "TransSocial",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "katninystudios",
+        "repo": "transsocial-app"
+      }
+    ],
+    "directories": {
+      "buildResources": "resources"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "signAndEditExecutable": false,
+      "verifyUpdateCodeSignature": false,
+      "icon": "resources/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "resources/icon.png"
+    }
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
+  },
+  "icon": "icon"
 }
